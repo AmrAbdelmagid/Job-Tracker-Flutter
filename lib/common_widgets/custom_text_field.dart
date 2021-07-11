@@ -10,6 +10,7 @@ class CustomOutlinedTextField extends StatelessWidget {
     this.borderRadius = 4.0,
     this.borderWidth = 2.0,
     this.height,
+    this.width,
     this.textColor,
     this.hintTextColor,
     this.borderColor,
@@ -19,6 +20,7 @@ class CustomOutlinedTextField extends StatelessWidget {
   final double borderRadius;
   final double borderWidth;
   final double? height;
+  final double? width;
   final Color? textColor;
   final Color? hintTextColor;
   final Color? borderColor;
@@ -27,6 +29,7 @@ class CustomOutlinedTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: height ?? null,
+      width: width ?? null,
       child: TextFormField(
         key: key,
         controller: controller,
