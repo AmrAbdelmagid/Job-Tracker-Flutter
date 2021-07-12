@@ -6,10 +6,13 @@ import 'package:flutter/services.dart';
 import 'package:job_tracker_flutter/common_widgets/custom_material_button.dart';
 import 'package:job_tracker_flutter/common_widgets/custom_text_field.dart';
 import 'package:job_tracker_flutter/helpers/responsive_helper.dart';
+import 'package:job_tracker_flutter/services/auth.dart';
 
 class SignInPage extends StatelessWidget {
-  // GlobalKey _paddingKey = GlobalKey();
+  const SignInPage({Key? key, required this.auth, required this.onSignIn})
+      : super(key: key);
 
+  // GlobalKey _paddingKey = GlobalKey();
   // _getPaddingSize() {
   //   final RenderBox renderBox =
   //       _paddingKey.currentContext!.findRenderObject() as RenderBox;
@@ -18,10 +21,13 @@ class SignInPage extends StatelessWidget {
   //   log(size.toString());
   // }
 
+  final void Function(User) onSignIn;
+  final AuthBase auth;
+
   Future<void> _signInAnonymously() async {
     try {
-      final credentials = await FirebaseAuth.instance.signInAnonymously();
-      print(credentials.user!.uid);
+      final user = await auth.signInAnonymously();
+      onSignIn(user!);
     } catch (e, s) {
       log(e.toString());
       log(s.toString());

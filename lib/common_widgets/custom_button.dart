@@ -1,9 +1,3 @@
-
-
-
-
-
-
 // when creating custom reusable widgets you need three things
 // 1- Add properties
 // 2- Add Constructor
