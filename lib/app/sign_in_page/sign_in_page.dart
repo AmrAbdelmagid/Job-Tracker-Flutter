@@ -9,8 +9,7 @@ import 'package:job_tracker_flutter/helpers/responsive_helper.dart';
 import 'package:job_tracker_flutter/services/auth.dart';
 
 class SignInPage extends StatelessWidget {
-  const SignInPage({Key? key, required this.auth, required this.onSignIn})
-      : super(key: key);
+  const SignInPage({Key? key, required this.auth}) : super(key: key);
 
   // GlobalKey _paddingKey = GlobalKey();
   // _getPaddingSize() {
@@ -21,13 +20,11 @@ class SignInPage extends StatelessWidget {
   //   log(size.toString());
   // }
 
-  final void Function(User) onSignIn;
   final AuthBase auth;
 
   Future<void> _signInAnonymously() async {
     try {
-      final user = await auth.signInAnonymously();
-      onSignIn(user!);
+      await auth.signInAnonymously();
     } catch (e, s) {
       log(e.toString());
       log(s.toString());
