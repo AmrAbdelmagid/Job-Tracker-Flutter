@@ -31,6 +31,15 @@ class SignInPage extends StatelessWidget {
     }
   }
 
+  Future<void> _signInWithGoogle() async {
+    try {
+      await auth.signInWithGoogle();
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     AppBar appBar = AppBar(
@@ -172,7 +181,7 @@ class SignInPage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        onPressed: () {},
+                        onPressed: _signInWithGoogle,
                         circularBorderRadius: 32.0,
                         height: constraints.maxHeight * .09,
                         width: (constraints.maxWidth * .11) * 4,
