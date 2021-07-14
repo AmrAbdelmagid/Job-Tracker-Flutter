@@ -2,11 +2,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:job_tracker_flutter/app/sign_in_page/sign_in_form.dart';
 import 'package:job_tracker_flutter/common_widgets/custom_material_button.dart';
-import 'package:job_tracker_flutter/services/auth_provider.dart';
+import 'package:job_tracker_flutter/services/auth.dart';
+import 'package:provider/provider.dart';
 
 class SignInPage extends StatelessWidget {
   Future<void> _signInAnonymously(context) async {
-    final auth = AuthProvider.of(context);
+    final auth = Provider.of<AuthBase>(context, listen: false);
     try {
       await auth.signInAnonymously();
     } catch (e, s) {
@@ -16,7 +17,7 @@ class SignInPage extends StatelessWidget {
   }
 
   Future<void> _signInWithGoogle(context) async {
-    final auth = AuthProvider.of(context);
+    final auth = Provider.of<AuthBase>(context, listen: false);
     try {
       await auth.signInWithGoogle();
     } catch (e, s) {
@@ -114,3 +115,5 @@ class SignInPage extends StatelessWidget {
     );
   }
 }
+
+class AuthProvider {}

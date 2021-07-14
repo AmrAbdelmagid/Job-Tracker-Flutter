@@ -1,11 +1,13 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:job_tracker_flutter/common_widgets/show_alert_dialog.dart';
+import 'package:job_tracker_flutter/services/auth.dart';
 import 'package:job_tracker_flutter/services/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   Future<void> _signOut(context) async {
-    final auth = AuthProvider.of(context);
+    final auth = Provider.of<AuthBase>(context, listen: false);
     try {
       await auth.signOut();
     } catch (e, s) {

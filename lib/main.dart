@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:job_tracker_flutter/app/landing/landing.dart';
 import 'package:job_tracker_flutter/services/auth.dart';
+import 'package:provider/provider.dart';
 import 'package:job_tracker_flutter/services/auth_provider.dart';
 
 Future<void> main() async {
@@ -15,8 +16,8 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return AuthProvider(
-      auth: Auth(),
+    return Provider<AuthBase>(
+      create: (context) => Auth(),
       child: MaterialApp(
         title: 'Job Tracker',
         debugShowCheckedModeBanner: false,

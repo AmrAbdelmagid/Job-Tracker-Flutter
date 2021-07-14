@@ -8,7 +8,9 @@ import 'package:job_tracker_flutter/app/sign_in_page/string_validator.dart';
 import 'package:job_tracker_flutter/common_widgets/custom_material_button.dart';
 import 'package:job_tracker_flutter/common_widgets/custom_text_field.dart';
 import 'package:job_tracker_flutter/common_widgets/show_alert_dialog.dart';
+import 'package:job_tracker_flutter/services/auth.dart';
 import 'package:job_tracker_flutter/services/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 enum EmailSignInFormType {
   SignIn,
@@ -64,7 +66,7 @@ class _SignInFormState extends State<SignInForm> {
       _isLoading = true;
     });
     try {
-      final auth = AuthProvider.of(context);
+      final auth = Provider.of<AuthBase>(context, listen: false);
       if (_formType == EmailSignInFormType.SignIn) {
         await auth.signInWithEmailAndPassword(
             email: _email, password: _password);
