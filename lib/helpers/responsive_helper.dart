@@ -34,3 +34,13 @@ double getUpperComponentsHeight(BuildContext context, AppBar appBar) {
 // log(MediaQuery.of(context).padding.top.toString());
 // log(kToolbarHeight.toString());
 // log(MediaQueryData.fromWindow(ui.window).padding.top.toString());
+
+
+// GlobalKey _paddingKey = GlobalKey();
+// _getPaddingSize() {
+//   final RenderBox renderBox =
+//       _paddingKey.currentContext!.findRenderObject() as RenderBox;
+//   final size = renderBox.size;
+//   log('here');
+//   log(size.toString());
+// }

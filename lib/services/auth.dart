@@ -5,12 +5,17 @@ abstract class AuthBase {
   User? get currentUser;
   Stream<User?> authStateChanges();
   Future<User?> signInAnonymously();
+  Future<User?> signInWithEmailAndPassword(
+      {required String email, required String password});
+  Future<User?> createUserWithEmailAndPassword(
+      {required String email, required String password});
   Future<User?> signInWithGoogle();
   Future<void> signOut();
 }
 
 class Auth implements AuthBase {
   final _firebaseAuth = FirebaseAuth.instance;
+  final googleSignIn = GoogleSignIn();
 
   @override
   Stream<User?> authStateChanges() => _firebaseAuth.authStateChanges();
@@ -25,8 +30,23 @@ class Auth implements AuthBase {
   }
 
   @override
+  Future<User?> signInWithEmailAndPassword(
+      {required String email, required String password}) async {
+    final userCredential = await _firebaseAuth.signInWithCredential(
+        EmailAuthProvider.credential(email: email, password: password));
+    return userCredential.user;
+  }
+
+  @override
+  Future<User?> createUserWithEmailAndPassword(
+      {required String email, required String password}) async {
+    final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email, password: password);
+    return userCredential.user;
+  }
+
+  @override
   Future<User?> signInWithGoogle() async {
-    final googleSignIn = GoogleSignIn();
     final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
     if (googleUser != null) {
       final googleAuth = await googleUser.authentication;
@@ -50,7 +70,6 @@ class Auth implements AuthBase {
 
   @override
   Future<void> signOut() async {
-    final googleSignIn = GoogleSignIn();
     await googleSignIn.signOut();
     await _firebaseAuth.signOut();
   }

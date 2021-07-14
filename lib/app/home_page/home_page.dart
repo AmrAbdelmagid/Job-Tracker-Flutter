@@ -1,7 +1,5 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:job_tracker_flutter/services/auth.dart';
 
 class HomePage extends StatelessWidget {
@@ -21,18 +19,13 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backwardsCompatibility: false,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: Theme.of(context).primaryColor,
-          statusBarIconBrightness: Brightness.light,
-        ),
-        backgroundColor: Theme.of(context).primaryColor,
         actions: [
           TextButton(
             onPressed: _signOut,
             child: Text(
               'Sign Out',
-              style: TextStyle(color: Colors.white, fontSize: 18.0),
+              style: TextStyle(
+                  color: Theme.of(context).primaryColor, fontSize: 18.0),
             ),
           )
         ],

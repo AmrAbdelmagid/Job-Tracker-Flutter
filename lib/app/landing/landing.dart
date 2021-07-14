@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:job_tracker_flutter/app/home_page/home_page.dart';
 import 'package:job_tracker_flutter/app/sign_in_page/sign_in_page.dart';
+import 'package:job_tracker_flutter/app/sign_in_page/string_validator.dart';
 import 'package:job_tracker_flutter/services/auth.dart';
 
 class LandingPage extends StatelessWidget {
