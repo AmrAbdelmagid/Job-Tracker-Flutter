@@ -8,7 +8,7 @@ import 'package:job_tracker_flutter/app/sign_in_page/string_validator.dart';
 import 'package:job_tracker_flutter/common_widgets/custom_material_button.dart';
 import 'package:job_tracker_flutter/common_widgets/custom_text_field.dart';
 import 'package:job_tracker_flutter/common_widgets/show_alert_dialog.dart';
-import 'package:job_tracker_flutter/services/auth.dart';
+import 'package:job_tracker_flutter/services/auth_provider.dart';
 
 enum EmailSignInFormType {
   SignIn,
@@ -16,9 +16,6 @@ enum EmailSignInFormType {
 }
 
 class SignInForm extends StatefulWidget with EmailAndPasswordValidators {
-  SignInForm({required this.auth});
-  final AuthBase auth;
-
   @override
   _SignInFormState createState() => _SignInFormState();
 }
@@ -67,12 +64,13 @@ class _SignInFormState extends State<SignInForm> {
       _isLoading = true;
     });
     try {
+      final auth = AuthProvider.of(context);
       if (_formType == EmailSignInFormType.SignIn) {
-        await widget.auth
-            .signInWithEmailAndPassword(email: _email, password: _password);
+        await auth.signInWithEmailAndPassword(
+            email: _email, password: _password);
       } else {
-        await widget.auth
-            .createUserWithEmailAndPassword(email: _email, password: _password);
+        await auth.createUserWithEmailAndPassword(
+            email: _email, password: _password);
       }
     } catch (e, s) {
       log(e.toString());

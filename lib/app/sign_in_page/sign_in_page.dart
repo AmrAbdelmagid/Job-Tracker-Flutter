@@ -2,14 +2,11 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:job_tracker_flutter/app/sign_in_page/sign_in_form.dart';
 import 'package:job_tracker_flutter/common_widgets/custom_material_button.dart';
-import 'package:job_tracker_flutter/services/auth.dart';
+import 'package:job_tracker_flutter/services/auth_provider.dart';
 
 class SignInPage extends StatelessWidget {
-  SignInPage({Key? key, required this.auth}) : super(key: key);
-
-  final AuthBase auth;
-
-  Future<void> _signInAnonymously() async {
+  Future<void> _signInAnonymously(context) async {
+    final auth = AuthProvider.of(context);
     try {
       await auth.signInAnonymously();
     } catch (e, s) {
@@ -18,7 +15,8 @@ class SignInPage extends StatelessWidget {
     }
   }
 
-  Future<void> _signInWithGoogle() async {
+  Future<void> _signInWithGoogle(context) async {
+    final auth = AuthProvider.of(context);
     try {
       await auth.signInWithGoogle();
     } catch (e, s) {
@@ -51,9 +49,7 @@ class SignInPage extends StatelessWidget {
                 SizedBox(
                   height: 40.0,
                 ),
-                SignInForm(
-                  auth: auth,
-                ),
+                SignInForm(),
                 SizedBox(
                   height: 10.0,
                 ),
@@ -92,7 +88,7 @@ class SignInPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  onPressed: _signInWithGoogle,
+                  onPressed: () => _signInWithGoogle(context),
                   circularBorderRadius: 32.0,
                 ),
                 SizedBox(
@@ -107,7 +103,7 @@ class SignInPage extends StatelessWidget {
                     'Go Anonymously',
                     style: TextStyle(color: Theme.of(context).accentColor),
                   ),
-                  onPressed: _signInAnonymously,
+                  onPressed: () => _signInAnonymously(context),
                   circularBorderRadius: 32.0,
                 ),
               ],
