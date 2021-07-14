@@ -23,6 +23,8 @@ double getUpperComponentsHeight(BuildContext context, AppBar appBar) {
   return appBar.preferredSize.height + MediaQuery.of(context).padding.top;
 }
 
+// onTap: () => FocusManager.instance.primaryFocus?.unfocus()
+
 // log(getUpperComponentsHeight(context, appBar).toString());
 // log(getLowerComponentsHeight(context, appBar));
 // log(getInnerHeight(context, appBar).toString());

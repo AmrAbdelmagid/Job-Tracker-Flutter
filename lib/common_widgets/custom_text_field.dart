@@ -21,6 +21,7 @@ class CustomOutlinedTextField extends StatelessWidget {
     this.keyboardType,
     this.textInputAction,
     this.focusNode,
+    this.enabled,
     this.onEditingComplete,
     this.onChanged,
   });
@@ -41,6 +42,7 @@ class CustomOutlinedTextField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final FocusNode? focusNode;
   final Key? key;
+  final bool? enabled;
   final void Function()? onEditingComplete;
   final void Function(String)? onChanged;
   @override
@@ -51,6 +53,7 @@ class CustomOutlinedTextField extends StatelessWidget {
       child: TextFormField(
         key: key,
         onEditingComplete: onEditingComplete,
+        enabled: enabled,
         onChanged: onChanged,
         focusNode: focusNode,
         keyboardType: keyboardType,
