@@ -1,28 +1,73 @@
-import 'dart:developer';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:job_tracker_flutter/app/sign_in_page/sign_in_form.dart';
 import 'package:job_tracker_flutter/common_widgets/custom_material_button.dart';
+import 'package:job_tracker_flutter/common_widgets/show_exception_alert_dialog.dart';
 import 'package:job_tracker_flutter/services/auth.dart';
 import 'package:provider/provider.dart';
 
-class SignInPage extends StatelessWidget {
+bool isLoading = false;
+
+class SignInPage extends StatefulWidget {
+  @override
+  _SignInPageState createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  void _showSignInError(BuildContext context, Exception exception) {
+    if (exception is FirebaseException &&
+        exception.code == 'ERROR_ABORTED_BY_USER') {
+      return;
+    }
+    showExceptionAlertDialog(
+        context: context, title: 'Sign In Error', exception: exception);
+  }
+
+  _updateState(bool _isLoading) {
+    setState(() {
+      isLoading = _isLoading;
+    });
+  }
+
   Future<void> _signInAnonymously(context) async {
     final auth = Provider.of<AuthBase>(context, listen: false);
     try {
+      setState(() {
+        isLoading = true;
+      });
       await auth.signInAnonymously();
-    } catch (e, s) {
-      log(e.toString());
-      log(s.toString());
+      setState(() {
+        isLoading = false;
+      });
+    } on Exception catch (e, s) {
+      // log(e.toString());
+      // log(s.toString());
+      _showSignInError(context, e);
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
   Future<void> _signInWithGoogle(context) async {
     final auth = Provider.of<AuthBase>(context, listen: false);
     try {
+      setState(() {
+        isLoading = true;
+      });
       await auth.signInWithGoogle();
-    } catch (e, s) {
-      log(e.toString());
-      log(s.toString());
+      setState(() {
+        isLoading = false;
+      });
+    } on Exception catch (e, s) {
+      // log(e.toString());
+      // log(s.toString());
+      _showSignInError(context, e);
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -50,7 +95,7 @@ class SignInPage extends StatelessWidget {
                 SizedBox(
                   height: 40.0,
                 ),
-                SignInForm(),
+                SignInForm(_updateState),
                 SizedBox(
                   height: 10.0,
                 ),
@@ -89,7 +134,8 @@ class SignInPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  onPressed: () => _signInWithGoogle(context),
+                  onPressed:
+                      isLoading ? null : () => _signInWithGoogle(context),
                   circularBorderRadius: 32.0,
                 ),
                 SizedBox(
@@ -104,7 +150,8 @@ class SignInPage extends StatelessWidget {
                     'Go Anonymously',
                     style: TextStyle(color: Theme.of(context).accentColor),
                   ),
-                  onPressed: () => _signInAnonymously(context),
+                  onPressed:
+                      isLoading ? null : () => _signInAnonymously(context),
                   circularBorderRadius: 32.0,
                 ),
               ],

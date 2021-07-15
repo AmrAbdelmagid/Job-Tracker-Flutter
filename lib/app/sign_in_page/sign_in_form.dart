@@ -1,13 +1,11 @@
 import 'dart:developer';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-
 import 'package:flutter/material.dart';
+import 'package:job_tracker_flutter/app/sign_in_page/sign_in_page.dart';
 import 'package:job_tracker_flutter/app/sign_in_page/string_validator.dart';
 import 'package:job_tracker_flutter/common_widgets/custom_material_button.dart';
 import 'package:job_tracker_flutter/common_widgets/custom_text_field.dart';
-import 'package:job_tracker_flutter/common_widgets/show_alert_dialog.dart';
 import 'package:job_tracker_flutter/common_widgets/show_exception_alert_dialog.dart';
 import 'package:job_tracker_flutter/services/auth.dart';
 import 'package:provider/provider.dart';
@@ -18,13 +16,13 @@ enum EmailSignInFormType {
 }
 
 class SignInForm extends StatefulWidget with EmailAndPasswordValidators {
+  SignInForm(this.updateState);
+  final Function(bool) updateState;
   @override
   _SignInFormState createState() => _SignInFormState();
 }
 
 class _SignInFormState extends State<SignInForm> {
-  var keyboardVisibilityController = KeyboardVisibilityController();
-
   @override
   void initState() {
     super.initState();
@@ -36,13 +34,23 @@ class _SignInFormState extends State<SignInForm> {
     });
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _emailFocusNode.dispose();
+    _passwordFocusNode.dispose();
+  }
+
+  var keyboardVisibilityController = KeyboardVisibilityController();
   var _emailController = TextEditingController();
   var _passwordController = TextEditingController();
   var _formType = EmailSignInFormType.SignIn;
   var _emailFocusNode = FocusNode();
   var _passwordFocusNode = FocusNode();
+
   bool _isSubmitted = false;
-  bool _isLoading = false;
 
   String get _email => _emailController.text;
   String get _password => _passwordController.text;
@@ -63,7 +71,8 @@ class _SignInFormState extends State<SignInForm> {
   void _submit() async {
     setState(() {
       _isSubmitted = true;
-      _isLoading = true;
+      isLoading = true;
+      widget.updateState(isLoading);
     });
     try {
       final auth = Provider.of<AuthBase>(context, listen: false);
@@ -74,12 +83,19 @@ class _SignInFormState extends State<SignInForm> {
         await auth.createUserWithEmailAndPassword(
             email: _email, password: _password);
       }
+      setState(() {
+        isLoading = false;
+        widget.updateState(isLoading);
+      });
     } on Exception catch (e, s) {
+      // log(e.toString());
+      // log(s.toString());
       showExceptionAlertDialog(
-          context: context, title: 'Authentication Error', exception: e);
+          context: context, title: 'Sign In Error', exception: e);
     } finally {
       setState(() {
-        _isLoading = false;
+        isLoading = false;
+        widget.updateState(isLoading);
       });
     }
   }
@@ -93,7 +109,7 @@ class _SignInFormState extends State<SignInForm> {
           controller: _emailController,
           keyboardType: TextInputType.emailAddress,
           textInputAction: TextInputAction.next,
-          enabled: !_isLoading,
+          enabled: !isLoading,
           focusNode: _emailFocusNode,
           textHint: 'Email',
           errorText: _isSubmitted && !widget.emailValidator.isValid(_email)
@@ -119,7 +135,7 @@ class _SignInFormState extends State<SignInForm> {
           focusNode: _passwordFocusNode,
           obscureText: true,
           borderRadius: 32.0,
-          enabled: !_isLoading,
+          enabled: !isLoading,
           textHint: 'Password',
           errorText:
               _isSubmitted && !widget.passwordValidator.isValid(_password)
@@ -133,7 +149,7 @@ class _SignInFormState extends State<SignInForm> {
         SizedBox(
           height: 20.0,
         ),
-        _isLoading
+        isLoading
             ? Center(child: CircularProgressIndicator())
             : CustomMaterialButton(
                 child: Text(_formType == EmailSignInFormType.SignIn
@@ -141,7 +157,7 @@ class _SignInFormState extends State<SignInForm> {
                     : 'Sign Up'),
                 onPressed: (widget.emailValidator.isValid(_email) &&
                         widget.passwordValidator.isValid(_password) &&
-                        !_isLoading)
+                        !isLoading)
                     ? _submit
                     : null,
                 circularBorderRadius: 32.0,
@@ -153,7 +169,7 @@ class _SignInFormState extends State<SignInForm> {
           children: [
             Spacer(),
             TextButton(
-              onPressed: _toggleFormType,
+              onPressed: isLoading ? null : _toggleFormType,
               child: Text(_formType == EmailSignInFormType.SignIn
                   ? 'Don\'t have an account? Sign Up'
                   : 'Have an account? Sign In'),
