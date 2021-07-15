@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:job_tracker_flutter/app/landing/landing.dart';
 import 'package:job_tracker_flutter/services/auth.dart';
 import 'package:provider/provider.dart';
-import 'package:job_tracker_flutter/services/auth_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

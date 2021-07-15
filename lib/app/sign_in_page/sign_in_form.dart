@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
@@ -8,8 +8,8 @@ import 'package:job_tracker_flutter/app/sign_in_page/string_validator.dart';
 import 'package:job_tracker_flutter/common_widgets/custom_material_button.dart';
 import 'package:job_tracker_flutter/common_widgets/custom_text_field.dart';
 import 'package:job_tracker_flutter/common_widgets/show_alert_dialog.dart';
+import 'package:job_tracker_flutter/common_widgets/show_exception_alert_dialog.dart';
 import 'package:job_tracker_flutter/services/auth.dart';
-import 'package:job_tracker_flutter/services/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 enum EmailSignInFormType {
@@ -74,11 +74,9 @@ class _SignInFormState extends State<SignInForm> {
         await auth.createUserWithEmailAndPassword(
             email: _email, password: _password);
       }
-    } catch (e, s) {
-      log(e.toString());
-      log(s.toString());
-      showAlertDialog(
-          context: context, error: e.toString(), title: 'Authentication Error');
+    } on Exception catch (e, s) {
+      showExceptionAlertDialog(
+          context: context, title: 'Authentication Error', exception: e);
     } finally {
       setState(() {
         _isLoading = false;

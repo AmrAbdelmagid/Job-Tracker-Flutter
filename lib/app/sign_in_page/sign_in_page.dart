@@ -115,5 +115,3 @@ class SignInPage extends StatelessWidget {
     );
   }
 }
-
-class AuthProvider {}
