@@ -22,3 +22,8 @@
 // 3- implement .of(context) method
 // 4- add a child widget
 // 5- use it in the widget tree
+
+// BloCs (traditional definition)
+// 1- BloCs only expose sinks and sources
+// 2- BloCs have no UI Code
+// 3- BloCs talk to the outside world via services

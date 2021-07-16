@@ -10,19 +10,20 @@ import 'package:job_tracker_flutter/common_widgets/show_exception_alert_dialog.d
 import 'package:job_tracker_flutter/services/auth.dart';
 import 'package:provider/provider.dart';
 
+bool isLoading = false;
+
 enum EmailSignInFormType {
   SignIn,
   SignUp,
 }
 
-class SignInForm extends StatefulWidget with EmailAndPasswordValidators {
-  SignInForm(this.updateState);
-  final Function(bool) updateState;
+class SignInFormStateFul extends StatefulWidget
+    with EmailAndPasswordValidators {
   @override
-  _SignInFormState createState() => _SignInFormState();
+  _SignInFormStateFulState createState() => _SignInFormStateFulState();
 }
 
-class _SignInFormState extends State<SignInForm> {
+class _SignInFormStateFulState extends State<SignInFormStateFul> {
   @override
   void initState() {
     super.initState();
@@ -72,7 +73,6 @@ class _SignInFormState extends State<SignInForm> {
     setState(() {
       _isSubmitted = true;
       isLoading = true;
-      widget.updateState(isLoading);
     });
     try {
       final auth = Provider.of<AuthBase>(context, listen: false);
@@ -85,7 +85,6 @@ class _SignInFormState extends State<SignInForm> {
       }
       setState(() {
         isLoading = false;
-        widget.updateState(isLoading);
       });
     } on Exception catch (e, s) {
       // log(e.toString());
@@ -95,7 +94,6 @@ class _SignInFormState extends State<SignInForm> {
     } finally {
       setState(() {
         isLoading = false;
-        widget.updateState(isLoading);
       });
     }
   }
