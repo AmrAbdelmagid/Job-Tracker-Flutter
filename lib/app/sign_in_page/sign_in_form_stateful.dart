@@ -2,20 +2,13 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter/material.dart';
-import 'package:job_tracker_flutter/app/sign_in_page/sign_in_page.dart';
+import 'package:job_tracker_flutter/app/models/email_sign_in_model.dart';
 import 'package:job_tracker_flutter/app/sign_in_page/string_validator.dart';
 import 'package:job_tracker_flutter/common_widgets/custom_material_button.dart';
 import 'package:job_tracker_flutter/common_widgets/custom_text_field.dart';
 import 'package:job_tracker_flutter/common_widgets/show_exception_alert_dialog.dart';
 import 'package:job_tracker_flutter/services/auth.dart';
 import 'package:provider/provider.dart';
-
-bool isLoading = false;
-
-enum EmailSignInFormType {
-  SignIn,
-  SignUp,
-}
 
 class SignInFormStateFul extends StatefulWidget
     with EmailAndPasswordValidators {
@@ -52,6 +45,7 @@ class _SignInFormStateFulState extends State<SignInFormStateFul> {
   var _passwordFocusNode = FocusNode();
 
   bool _isSubmitted = false;
+  bool _isLoading = false;
 
   String get _email => _emailController.text;
   String get _password => _passwordController.text;
@@ -72,7 +66,7 @@ class _SignInFormStateFulState extends State<SignInFormStateFul> {
   void _submit() async {
     setState(() {
       _isSubmitted = true;
-      isLoading = true;
+      _isLoading = true;
     });
     try {
       final auth = Provider.of<AuthBase>(context, listen: false);
@@ -84,7 +78,7 @@ class _SignInFormStateFulState extends State<SignInFormStateFul> {
             email: _email, password: _password);
       }
       setState(() {
-        isLoading = false;
+        _isLoading = false;
       });
     } on Exception catch (e, s) {
       // log(e.toString());
@@ -93,7 +87,7 @@ class _SignInFormStateFulState extends State<SignInFormStateFul> {
           context: context, title: 'Sign In Error', exception: e);
     } finally {
       setState(() {
-        isLoading = false;
+        _isLoading = false;
       });
     }
   }
@@ -107,7 +101,7 @@ class _SignInFormStateFulState extends State<SignInFormStateFul> {
           controller: _emailController,
           keyboardType: TextInputType.emailAddress,
           textInputAction: TextInputAction.next,
-          enabled: !isLoading,
+          enabled: !_isLoading,
           focusNode: _emailFocusNode,
           textHint: 'Email',
           errorText: _isSubmitted && !widget.emailValidator.isValid(_email)
@@ -133,7 +127,7 @@ class _SignInFormStateFulState extends State<SignInFormStateFul> {
           focusNode: _passwordFocusNode,
           obscureText: true,
           borderRadius: 32.0,
-          enabled: !isLoading,
+          enabled: !_isLoading,
           textHint: 'Password',
           errorText:
               _isSubmitted && !widget.passwordValidator.isValid(_password)
@@ -147,7 +141,7 @@ class _SignInFormStateFulState extends State<SignInFormStateFul> {
         SizedBox(
           height: 20.0,
         ),
-        isLoading
+        _isLoading
             ? Center(child: CircularProgressIndicator())
             : CustomMaterialButton(
                 child: Text(_formType == EmailSignInFormType.SignIn
@@ -155,7 +149,7 @@ class _SignInFormStateFulState extends State<SignInFormStateFul> {
                     : 'Sign Up'),
                 onPressed: (widget.emailValidator.isValid(_email) &&
                         widget.passwordValidator.isValid(_password) &&
-                        !isLoading)
+                        !_isLoading)
                     ? _submit
                     : null,
                 circularBorderRadius: 32.0,
@@ -167,7 +161,7 @@ class _SignInFormStateFulState extends State<SignInFormStateFul> {
           children: [
             Spacer(),
             TextButton(
-              onPressed: isLoading ? null : _toggleFormType,
+              onPressed: _isLoading ? null : _toggleFormType,
               child: Text(_formType == EmailSignInFormType.SignIn
                   ? 'Don\'t have an account? Sign Up'
                   : 'Have an account? Sign In'),

@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:job_tracker_flutter/app/blocs/sign_in_bloc.dart';
+import 'package:job_tracker_flutter/app/sign_in_page/sign_in_form_bloc_based.dart';
 import 'package:job_tracker_flutter/app/sign_in_page/sign_in_form_stateful.dart';
 import 'package:job_tracker_flutter/common_widgets/custom_material_button.dart';
 import 'package:job_tracker_flutter/common_widgets/show_exception_alert_dialog.dart';
@@ -89,7 +90,7 @@ class SignInPage extends StatelessWidget {
                   SizedBox(
                     height: 40.0,
                   ),
-                  SignInFormStateFul(),
+                  SignInFormBlocBased.create(context),
                   SizedBox(
                     height: 10.0,
                   ),
