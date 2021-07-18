@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:job_tracker_flutter/app/models/email_sign_in_model.dart';
 import 'package:job_tracker_flutter/services/auth.dart';
 

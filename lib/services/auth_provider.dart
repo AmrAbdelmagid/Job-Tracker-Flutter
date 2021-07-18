@@ -1,3 +1,4 @@
+// Legacy implementation -- How to make an inherited widget.
 // import 'package:flutter/material.dart';
 // import 'package:job_tracker_flutter/services/auth.dart';
 

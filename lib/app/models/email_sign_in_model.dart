@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:job_tracker_flutter/app/sign_in_page/string_validator.dart';
 
 enum EmailSignInFormType {
@@ -35,6 +34,8 @@ class EmailSignInModel with EmailAndPasswordValidators {
       isSubmitted: isSubmitted ?? this.isSubmitted,
     );
   }
+
+  // Computed Values
 
   bool get canSubmit {
     return emailValidator.isValid(email) &&

@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter/material.dart';
 import 'package:job_tracker_flutter/app/blocs/email_sign_in_bloc.dart';
