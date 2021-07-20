@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:job_tracker_flutter/app/blocs/sign_in_manager.dart';
-import 'package:job_tracker_flutter/app/sign_in_page/sign_in_form_bloc_based.dart';
 import 'package:job_tracker_flutter/app/sign_in_page/sign_in_form_change_notifier.dart';
 import 'package:job_tracker_flutter/common_widgets/custom_material_button.dart';
 import 'package:job_tracker_flutter/common_widgets/show_exception_alert_dialog.dart';
@@ -77,6 +77,13 @@ class SignInPage extends StatelessWidget {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         appBar: AppBar(
+          // backwardsCompatibility: false,
+          // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          // centerTitle: true,
+          // systemOverlayStyle: SystemUiOverlayStyle(
+          //   statusBarColor: Theme.of(context).scaffoldBackgroundColor,
+          //   statusBarIconBrightness: Brightness.dark,
+          // ),
           title: Text(
             'Job Tracker',
             style: TextStyle(color: Theme.of(context).primaryColor),

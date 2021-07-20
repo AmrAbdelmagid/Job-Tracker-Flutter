@@ -21,18 +21,17 @@ class MyApp extends StatelessWidget {
         title: 'Job Tracker',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primaryColor: Color(0xff414042),
-          accentColor: Color(0xffDEB321),
-          appBarTheme: AppBarTheme(
-            backwardsCompatibility: false,
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            centerTitle: true,
-            systemOverlayStyle: SystemUiOverlayStyle(
-              statusBarColor: Theme.of(context).scaffoldBackgroundColor,
-              statusBarIconBrightness: Brightness.dark,
-            ),
-            elevation: 0.0,
-          ),
+          primarySwatch: Colors.indigo,
+          // appBarTheme: AppBarTheme(
+          //   // backwardsCompatibility: false,
+          //   // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          //   // centerTitle: true,
+          //   // systemOverlayStyle: SystemUiOverlayStyle(
+          //   //   statusBarColor: Theme.of(context).scaffoldBackgroundColor,
+          //   //   statusBarIconBrightness: Brightness.dark,
+          //   // ),
+          //   elevation: 0.0,
+          // ),
         ),
         home: LandingPage(),
       ),

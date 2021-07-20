@@ -1,10 +1,9 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:job_tracker_flutter/app/home_page/home_page.dart';
+import 'package:job_tracker_flutter/app/home_page/jobs_page.dart';
 import 'package:job_tracker_flutter/app/sign_in_page/sign_in_page.dart';
 import 'package:job_tracker_flutter/services/auth.dart';
+import 'package:job_tracker_flutter/services/database.dart';
 import 'package:provider/provider.dart';
 
 class LandingPage extends StatelessWidget {
@@ -19,7 +18,9 @@ class LandingPage extends StatelessWidget {
           if (user == null) {
             return SignInPage.create(context);
           }
-          return HomePage();
+          return Provider<Database>(
+              create: (_) => FirestoreDatabase(uid: user.uid),
+              child: JobsPage());
         }
         return Scaffold(
           body: Center(
