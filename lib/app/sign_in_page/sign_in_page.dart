@@ -88,7 +88,6 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     updateLoadingState(bool isLoadingParm) {
-      log(isLoadingParm.toString());
       setState(() {
         isLoadingGlobal = isLoadingParm;
       });
