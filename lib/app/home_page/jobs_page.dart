@@ -54,8 +54,7 @@ class JobsPage extends StatelessWidget {
             onPressed: () => _confirmSignOut(context),
             child: Text(
               'Sign Out',
-              style: TextStyle(
-                  color: Theme.of(context).primaryColor, fontSize: 18.0),
+              style: TextStyle(color: Colors.white, fontSize: 18.0),
             ),
           )
         ],

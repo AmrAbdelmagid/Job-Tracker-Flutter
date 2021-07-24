@@ -22,16 +22,12 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.indigo,
-          // appBarTheme: AppBarTheme(
-          //   // backwardsCompatibility: false,
-          //   // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          //   // centerTitle: true,
-          //   // systemOverlayStyle: SystemUiOverlayStyle(
-          //   //   statusBarColor: Theme.of(context).scaffoldBackgroundColor,
-          //   //   statusBarIconBrightness: Brightness.dark,
-          //   // ),
-          //   elevation: 0.0,
-          // ),
+          appBarTheme: AppBarTheme(
+            backwardsCompatibility: false,
+            systemOverlayStyle: SystemUiOverlayStyle(
+              statusBarIconBrightness: Brightness.light,
+            ),
+          ),
         ),
         home: LandingPage(),
       ),

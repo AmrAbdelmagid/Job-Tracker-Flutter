@@ -28,9 +28,9 @@ class CustomMaterialButton extends StatelessWidget {
       width: width,
       child: MaterialButton(
         child: child,
-        disabledColor: disabledColor ?? Colors.grey,
-        disabledTextColor: disabledTextColor ?? Colors.black,
-        textColor: Theme.of(context).accentColor,
+        disabledColor: disabledColor ?? Theme.of(context).primaryColor,
+        disabledTextColor: disabledTextColor ?? Colors.white,
+        textColor: Colors.white,
         onPressed: onPressed,
         color: color ?? Theme.of(context).primaryColor,
         shape: RoundedRectangleBorder(

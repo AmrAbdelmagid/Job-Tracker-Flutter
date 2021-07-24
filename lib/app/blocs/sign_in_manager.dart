@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:job_tracker_flutter/app/sign_in_page/sign_in_page.dart';
 import 'package:job_tracker_flutter/services/auth.dart';
 
 // Renamed from SignInBloc as now it's not containing streams
@@ -20,10 +21,14 @@ class SignInManager {
 
   Future<User?> _signIn(Future<User?> Function() signInMethod) async {
     try {
-      isLoading.value = true;
+      isLoadingGlobal = true;
+      isLoading.value = isLoadingGlobal;
+
       return await signInMethod();
     } catch (e) {
-      isLoading.value = false;
+      isLoadingGlobal = false;
+      isLoading.value = isLoadingGlobal;
+
       rethrow;
     }
   }

@@ -4,7 +4,10 @@ class FirestoreServices {
   FirestoreServices._();
   static final instance = FirestoreServices._();
 
-  Future<void> setData(String path, Map<String, dynamic> data) async {
+  Future<void> setData(
+    String path,
+    Map<String, dynamic> data,
+  ) async {
     final reference = FirebaseFirestore.instance.doc(path);
     await reference.set(data);
   }

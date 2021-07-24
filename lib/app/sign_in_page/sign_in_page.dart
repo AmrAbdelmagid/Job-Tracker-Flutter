@@ -1,6 +1,7 @@
+import 'dart:developer';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:job_tracker_flutter/app/blocs/sign_in_manager.dart';
 import 'package:job_tracker_flutter/app/sign_in_page/sign_in_form_change_notifier.dart';
 import 'package:job_tracker_flutter/common_widgets/custom_material_button.dart';
@@ -8,12 +9,17 @@ import 'package:job_tracker_flutter/common_widgets/show_exception_alert_dialog.d
 import 'package:job_tracker_flutter/services/auth.dart';
 import 'package:provider/provider.dart';
 
-class SignInPage extends StatelessWidget {
+bool isLoadingGlobal = false;
+
+class SignInPage extends StatefulWidget {
   final SignInManager manager;
   final bool isLoading;
 
-  const SignInPage({Key? key, required this.manager, required this.isLoading})
-      : super(key: key);
+  SignInPage({
+    Key? key,
+    required this.manager,
+    required this.isLoading,
+  }) : super(key: key);
   // Top Tip
   // Use a static create(context) method when creating widgets that require
   // a bloc / manager as:
@@ -31,7 +37,7 @@ class SignInPage extends StatelessWidget {
           child: Consumer<SignInManager>(
             builder: (_, manager, __) => SignInPage(
               manager: manager,
-              isLoading: isLoading.value,
+              isLoading: manager.isLoading.value,
             ),
           ),
         ),
@@ -39,8 +45,16 @@ class SignInPage extends StatelessWidget {
     );
   }
 
-  // These methods are still here as they are responsible for showing alert
-  // dialogs errors which is a part of the UI layer (requires the context)
+  @override
+  _SignInPageState createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  @override
+  void dispose() {
+    super.dispose();
+    isLoadingGlobal = false;
+  }
 
   void _showSignInError(BuildContext context, Exception exception) {
     if (exception is FirebaseException &&
@@ -53,7 +67,7 @@ class SignInPage extends StatelessWidget {
 
   Future<void> _signInAnonymously(context) async {
     try {
-      await manager.signInAnonymously();
+      await widget.manager.signInAnonymously();
     } on Exception catch (e, s) {
       // log(e.toString());
       // log(s.toString());
@@ -63,7 +77,7 @@ class SignInPage extends StatelessWidget {
 
   Future<void> _signInWithGoogle(context) async {
     try {
-      await manager.signInWithGoogle();
+      await widget.manager.signInWithGoogle();
     } on Exception catch (e, s) {
       // log(e.toString());
       // log(s.toString());
@@ -73,6 +87,13 @@ class SignInPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    updateLoadingState(bool isLoadingParm) {
+      log(isLoadingParm.toString());
+      setState(() {
+        isLoadingGlobal = isLoadingParm;
+      });
+    }
+
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -86,7 +107,7 @@ class SignInPage extends StatelessWidget {
           // ),
           title: Text(
             'Job Tracker',
-            style: TextStyle(color: Theme.of(context).primaryColor),
+            style: TextStyle(color: Colors.white),
           ),
         ),
         body: SingleChildScrollView(
@@ -99,10 +120,26 @@ class SignInPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: 40.0,
+                Stack(
+                  children: [
+                    if (widget.isLoading || isLoadingGlobal)
+                      Column(
+                        children: [
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                            child: LinearProgressIndicator(),
+                          ),
+                        ],
+                      ),
+                    SizedBox(
+                      height: 40.0,
+                    ),
+                  ],
                 ),
-                SignInFormChangeNotifier.create(context),
+                SignInFormChangeNotifier.create(context, updateLoadingState),
                 SizedBox(
                   height: 10.0,
                 ),
@@ -112,13 +149,13 @@ class SignInPage extends StatelessWidget {
                     Container(
                       height: 1,
                       width: 100.0,
-                      color: Colors.grey,
+                      color: Theme.of(context).primaryColor,
                     ),
                     Text('Or'),
                     Container(
                       height: 1,
                       width: 100.0,
-                      color: Colors.grey,
+                      color: Theme.of(context).primaryColor,
                     ),
                   ],
                 ),
@@ -126,7 +163,8 @@ class SignInPage extends StatelessWidget {
                   height: 20.0,
                 ),
                 CustomMaterialButton(
-                  color: Theme.of(context).primaryColor,
+                  disabledColor: Colors.white,
+                  color: Colors.white,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -137,28 +175,26 @@ class SignInPage extends StatelessWidget {
                       ),
                       Text(
                         'Connect With Google',
-                        style: TextStyle(color: Theme.of(context).accentColor),
+                        style: TextStyle(color: Theme.of(context).primaryColor),
                       ),
                     ],
                   ),
-                  onPressed:
-                      (isLoading) ? null : () => _signInWithGoogle(context),
+                  onPressed: widget.isLoading || isLoadingGlobal
+                      ? null
+                      : () => _signInWithGoogle(context),
                   circularBorderRadius: 32.0,
                 ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                Align(alignment: Alignment.center, child: Text('Or')),
                 SizedBox(
                   height: 20.0,
                 ),
                 CustomMaterialButton(
                   child: Text(
                     'Go Anonymously',
-                    style: TextStyle(color: Theme.of(context).accentColor),
+                    style: TextStyle(color: Colors.white),
                   ),
-                  onPressed:
-                      (isLoading) ? null : () => _signInAnonymously(context),
+                  onPressed: widget.isLoading || isLoadingGlobal
+                      ? null
+                      : () => _signInAnonymously(context),
                   circularBorderRadius: 32.0,
                 ),
               ],

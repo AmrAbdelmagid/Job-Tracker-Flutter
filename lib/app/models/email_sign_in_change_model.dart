@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:job_tracker_flutter/app/sign_in_page/sign_in_page.dart';
 import 'package:job_tracker_flutter/app/sign_in_page/string_validator.dart';
 import 'package:job_tracker_flutter/services/auth.dart';
-
 import 'email_sign_in_model.dart' show EmailSignInFormType;
 
 class EmailSignInChangeModel with EmailAndPasswordValidators, ChangeNotifier {
@@ -53,6 +53,7 @@ class EmailSignInChangeModel with EmailAndPasswordValidators, ChangeNotifier {
 
   Future<void> submit() async {
     updateWith(isLoading: true, isSubmitted: true);
+
     try {
       if (formType == EmailSignInFormType.SignIn) {
         await auth.signInWithEmailAndPassword(email: email, password: password);
