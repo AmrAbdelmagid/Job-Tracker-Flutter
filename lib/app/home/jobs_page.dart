@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:job_tracker_flutter/app/home/edit_job_page.dart';
 import 'package:job_tracker_flutter/app/home/empty_content.dart';
+import 'package:job_tracker_flutter/app/home/job_entries/job_entries_page.dart';
 import 'package:job_tracker_flutter/app/home/job_tile.dart';
 import 'package:job_tracker_flutter/app/home/list_items_builder.dart';
 import 'package:job_tracker_flutter/app/models/job.dart';
@@ -61,7 +62,7 @@ class JobsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final database = Provider.of<Database>(context);
+    final database = Provider.of<Database>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text('Jobs'),
@@ -92,14 +93,14 @@ class JobsPage extends StatelessWidget {
               child: JobTile(
                   job: job,
                   onTap: () {
-                    EditJobPage.show(context, job: job);
+                    JobEntriesPage.show(context, job: job, database: database);
                   }),
             ),
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => EditJobPage.show(context),
+        onPressed: () => EditJobPage.show(context, database: database),
         child: Icon(Icons.add),
       ),
     );

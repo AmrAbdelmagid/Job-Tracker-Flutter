@@ -11,8 +11,9 @@ class EditJobPage extends StatefulWidget {
   final Job? job;
 
   const EditJobPage({required this.database, this.job});
-  static Future<void> show(BuildContext context, {Job? job}) async {
-    final database = Provider.of<Database>(context, listen: false);
+  static Future<void> show(BuildContext context,
+      {Job? job, required Database database}) async {
+    // final database = Provider.of<Database>(context, listen: false);
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => EditJobPage(
@@ -68,7 +69,7 @@ class _EditJobPageState extends State<EditJobPage> {
     try {
       if (_validateAndSave()) {
         final jobs = await widget.database.jobsStream().first;
-        final allNames = jobs.map((job) => job!.name).toList();
+        final allNames = jobs.map((job) => job.name).toList();
         if (widget.job != null) {
           allNames.remove(widget.job!.name);
         }
