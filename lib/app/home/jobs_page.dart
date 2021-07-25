@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:job_tracker_flutter/app/home/edit_job_page.dart';
+import 'package:job_tracker_flutter/app/home/empty_content.dart';
 import 'package:job_tracker_flutter/app/home/job_tile.dart';
 import 'package:job_tracker_flutter/app/models/job.dart';
 import 'package:job_tracker_flutter/common_widgets/show_alert_dialog.dart';
@@ -64,16 +65,20 @@ class JobsPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final jobs = snapshot.data;
-            final children = jobs!
-                .map((job) => JobTile(
-                    job: job,
-                    onTap: () {
-                      EditJobPage.show(context, job: job);
-                    }))
-                .toList();
-            return ListView(
-              children: children,
-            );
+            if (jobs!.isNotEmpty) {
+              final children = jobs
+                  .map((job) => JobTile(
+                      job: job,
+                      onTap: () {
+                        EditJobPage.show(context, job: job);
+                      }))
+                  .toList();
+              return ListView(
+                children: children,
+              );
+            } else {
+              return EmptyContent();
+            }
           }
           if (snapshot.hasError) {
             log(snapshot.error.toString());
