@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:job_tracker_flutter/app/home/edit_job_page.dart';
 import 'package:job_tracker_flutter/app/home/empty_content.dart';
 import 'package:job_tracker_flutter/app/home/job_tile.dart';
+import 'package:job_tracker_flutter/app/home/list_items_builder.dart';
 import 'package:job_tracker_flutter/app/models/job.dart';
 import 'package:job_tracker_flutter/common_widgets/show_alert_dialog.dart';
 import 'package:job_tracker_flutter/services/auth.dart';
@@ -63,28 +64,14 @@ class JobsPage extends StatelessWidget {
       body: StreamBuilder<List<Job?>>(
         stream: database.jobsStream(),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final jobs = snapshot.data;
-            if (jobs!.isNotEmpty) {
-              final children = jobs
-                  .map((job) => JobTile(
-                      job: job,
-                      onTap: () {
-                        EditJobPage.show(context, job: job);
-                      }))
-                  .toList();
-              return ListView(
-                children: children,
-              );
-            } else {
-              return EmptyContent();
-            }
-          }
-          if (snapshot.hasError) {
-            log(snapshot.error.toString());
-            return Center(child: Text('Some Error Ocurred'));
-          }
-          return Center(child: CircularProgressIndicator());
+          return ListItemsBuilder<Job>(
+            snapshot: snapshot,
+            itemBuilder: (context, job) => JobTile(
+                job: job,
+                onTap: () {
+                  EditJobPage.show(context, job: job);
+                }),
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(
