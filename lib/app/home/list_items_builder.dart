@@ -3,6 +3,9 @@ import 'package:job_tracker_flutter/app/home/empty_content.dart';
 
 typedef ItemWidgetBuilder<T> = Widget Function(BuildContext context, T? item);
 
+// This builder is to manage the four states of the data List
+// (has data, has no data, has error and loading states) in generic way
+
 class ListItemsBuilder<T> extends StatelessWidget {
   const ListItemsBuilder(
       {Key? key, required this.snapshot, required this.itemBuilder})
@@ -31,9 +34,16 @@ class ListItemsBuilder<T> extends StatelessWidget {
   }
 
   Widget _buildList(List<T?> items) {
-    return ListView.builder(
-      itemBuilder: (context, index) => itemBuilder(context, items[index]),
-      itemCount: items.length,
+    return ListView.separated(
+      physics: BouncingScrollPhysics(),
+      separatorBuilder: (context, index) => Divider(height: 0.5),
+      itemBuilder: (context, index) {
+        if (index == 0 || index == items.length + 1) {
+          return Container();
+        }
+        return itemBuilder(context, items[index - 1]);
+      },
+      itemCount: items.length + 2,
     );
   }
 }
