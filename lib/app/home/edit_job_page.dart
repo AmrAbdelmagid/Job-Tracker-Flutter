@@ -4,7 +4,6 @@ import 'package:job_tracker_flutter/app/models/job.dart';
 import 'package:job_tracker_flutter/common_widgets/show_alert_dialog.dart';
 import 'package:job_tracker_flutter/common_widgets/show_exception_alert_dialog.dart';
 import 'package:job_tracker_flutter/services/database.dart';
-import 'package:provider/provider.dart';
 
 class EditJobPage extends StatefulWidget {
   final Database database;
@@ -13,7 +12,6 @@ class EditJobPage extends StatefulWidget {
   const EditJobPage({required this.database, this.job});
   static Future<void> show(BuildContext context,
       {Job? job, required Database database}) async {
-    // final database = Provider.of<Database>(context, listen: false);
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => EditJobPage(

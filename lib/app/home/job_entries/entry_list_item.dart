@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:job_tracker_flutter/app/home/job_entries/format.dart';
 import 'package:job_tracker_flutter/app/models/entry.dart';
+import 'package:job_tracker_flutter/app/models/entry_list_item_model.dart';
 import 'package:job_tracker_flutter/app/models/job.dart';
 
 class EntryListItem extends StatelessWidget {
   const EntryListItem({
+    required this.model,
     required this.entry,
     required this.job,
     required this.onTap,
   });
-
+  final EntryListItemModel model;
   final Entry entry;
   final Job job;
   final VoidCallback onTap;
@@ -33,34 +35,36 @@ class EntryListItem extends StatelessWidget {
   }
 
   Widget _buildContents(BuildContext context) {
-    final dayOfWeek = Format.dayOfWeek(entry.start);
-    final startDate = Format.date(entry.start);
-    final startTime = TimeOfDay.fromDateTime(entry.start).format(context);
-    final endTime = TimeOfDay.fromDateTime(entry.end).format(context);
-    final durationFormatted = Format.hours(entry.durationInHours);
+    // final dayOfWeek = Format.dayOfWeek(entry.start);
+    // final startDate = Format.date(entry.start);
+    // final startTime = TimeOfDay.fromDateTime(entry.start).format(context);
+    // final endTime = TimeOfDay.fromDateTime(entry.end).format(context);
+    // final durationFormatted = Format.hours(entry.durationInHours);
 
-    final pay = double.tryParse(job.ratePerHour!)! * entry.durationInHours;
-    final payFormatted = Format.currency(pay);
+    // final pay = double.tryParse(job.ratePerHour!)! * entry.durationInHours;
+    // final payFormatted = Format.currency(pay);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Row(children: <Widget>[
-          Text(dayOfWeek, style: TextStyle(fontSize: 18.0, color: Colors.grey)),
+          Text(model.dayOfWeek,
+              style: TextStyle(fontSize: 18.0, color: Colors.grey)),
           SizedBox(width: 15.0),
-          Text(startDate, style: TextStyle(fontSize: 18.0)),
+          Text(model.startDate, style: TextStyle(fontSize: 18.0)),
           if (double.tryParse(job.ratePerHour!)! > 0.0) ...<Widget>[
             Expanded(child: Container()),
             Text(
-              payFormatted,
+              model.payFormatted,
               style: TextStyle(fontSize: 16.0, color: Colors.green[700]),
             ),
           ],
         ]),
         Row(children: <Widget>[
-          Text('$startTime - $endTime', style: TextStyle(fontSize: 16.0)),
+          Text('${model.startDate} - ${model.endTime}',
+              style: TextStyle(fontSize: 16.0)),
           Expanded(child: Container()),
-          Text(durationFormatted, style: TextStyle(fontSize: 16.0)),
+          Text(model.durationFormatted, style: TextStyle(fontSize: 16.0)),
         ]),
         if (entry.comment!.isNotEmpty)
           Text(
@@ -76,30 +80,31 @@ class EntryListItem extends StatelessWidget {
 
 class DismissibleEntryListItem extends StatelessWidget {
   const DismissibleEntryListItem({
-    this.key,
-    this.entry,
-    this.job,
-    this.onDismissed,
-    this.onTap,
+    required this.key,
+    required this.entry,
+    required this.job,
+    required this.onDismissed,
+    required this.onTap,
   });
 
-  final Key? key;
-  final Entry? entry;
-  final Job? job;
-  final VoidCallback? onDismissed;
-  final VoidCallback? onTap;
+  final Key key;
+  final Entry entry;
+  final Job job;
+  final VoidCallback onDismissed;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
       background: Container(color: Colors.red),
-      key: key!,
+      key: key,
       direction: DismissDirection.endToStart,
-      onDismissed: (direction) => onDismissed!(),
+      onDismissed: (direction) => onDismissed(),
       child: EntryListItem(
-        entry: entry!,
-        job: job!,
-        onTap: onTap!,
+        model: EntryListItemModel(entry: entry, job: job, context: context),
+        job: job,
+        entry: entry,
+        onTap: onTap,
       ),
     );
   }
