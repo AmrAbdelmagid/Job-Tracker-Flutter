@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:job_tracker_flutter/app/home/job_entries/format.dart';
 import 'package:job_tracker_flutter/app/models/entry.dart';
 import 'package:job_tracker_flutter/app/models/entry_list_item_model.dart';
 import 'package:job_tracker_flutter/app/models/job.dart';
@@ -35,15 +34,6 @@ class EntryListItem extends StatelessWidget {
   }
 
   Widget _buildContents(BuildContext context) {
-    // final dayOfWeek = Format.dayOfWeek(entry.start);
-    // final startDate = Format.date(entry.start);
-    // final startTime = TimeOfDay.fromDateTime(entry.start).format(context);
-    // final endTime = TimeOfDay.fromDateTime(entry.end).format(context);
-    // final durationFormatted = Format.hours(entry.durationInHours);
-
-    // final pay = double.tryParse(job.ratePerHour!)! * entry.durationInHours;
-    // final payFormatted = Format.currency(pay);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[

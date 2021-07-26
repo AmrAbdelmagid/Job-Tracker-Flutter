@@ -2,11 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:job_tracker_flutter/app/home/job_entries/date_time_picker.dart';
 import 'package:job_tracker_flutter/app/home/job_entries/format.dart';
 import 'package:job_tracker_flutter/app/models/entry.dart';
 import 'package:job_tracker_flutter/app/models/job.dart';
-
+import 'package:job_tracker_flutter/common_widgets/date_time_picker.dart';
 import 'package:job_tracker_flutter/common_widgets/show_exception_alert_dialog.dart';
 import 'package:job_tracker_flutter/services/database.dart';
 

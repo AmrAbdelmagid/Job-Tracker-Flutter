@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:job_tracker_flutter/app/home/edit_job_page.dart';
-import 'package:job_tracker_flutter/app/home/empty_content.dart';
 import 'package:job_tracker_flutter/app/home/job_entries/job_entries_page.dart';
 import 'package:job_tracker_flutter/app/home/job_tile.dart';
 import 'package:job_tracker_flutter/app/home/list_items_builder.dart';
