@@ -44,8 +44,8 @@ class JobEntriesPage extends StatelessWidget {
     return StreamBuilder<Job>(
       stream: database.jobStream(job),
       builder: (context, snapshot) {
-        final job = snapshot.data;
-        final jobName = job?.name ?? '';
+        final job = snapshot.data ?? Job(name: '', ratePerHour: '', jobId: '');
+        final jobName = job.name ?? '';
         return Scaffold(
           appBar: AppBar(
             elevation: 2.0,
@@ -61,7 +61,7 @@ class JobEntriesPage extends StatelessWidget {
               ),
             ],
           ),
-          body: _buildContent(context, job!),
+          body: _buildContent(context, job),
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add),
             onPressed: () =>
