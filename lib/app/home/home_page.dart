@@ -12,6 +12,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   TabItem _currentTap = TabItem.jobs;
   void _select(TabItem tabItem) {
+    if (tabItem == _currentTap) {
+      // pop to first route
+      navigatorKeys[tabItem]!.currentState!.popUntil((route) => route.isFirst);
+    }
     setState(() => _currentTap = tabItem);
   }
 
