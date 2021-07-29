@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:job_tracker_flutter/app/home/empty_content.dart';
 
@@ -23,6 +25,7 @@ class ListItemsBuilder<T> extends StatelessWidget {
         return EmptyContent();
       }
     } else if (snapshot.hasError) {
+      log(snapshot.error.toString());
       return EmptyContent(
         title: 'Something Went Wrong',
         message: 'Can\'t load jobs right now',
