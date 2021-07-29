@@ -8,6 +8,7 @@ A flutter app that tracks jobs and calculate the net time and revenue.
 - State management: 
    - Bloc Design Pattern (not Bloc packages) (Streams and StreamBuilder - RxDart)
    - Provider Package with ValeNotifier and ChangeNotifier
+ 
 - Packages:
    - firebase_core
    - firebase_auth
@@ -17,14 +18,14 @@ A flutter app that tracks jobs and calculate the net time and revenue.
    - provider
    - intl
  
-
 ## Notes
  - In this application the services layer, data layer and UI layer are separated.
  - This application includes advanced streams operation with reactive programming (RxDart).
+ - Each list is managed in the four UI states (has data, has no data, has error and loading states) in GENERIC way
+ - The application is designed to be reusable, so most of the logic is handled in generic way, also the logic classes are abstracted and using of it through APIs.
 
 ## Reference
  - I have accomplished this application by following this course: https://courses.codewithandrea.com/p/flutter-firebase-time-tracker-app
- 
 
 ## Screenshots
 
