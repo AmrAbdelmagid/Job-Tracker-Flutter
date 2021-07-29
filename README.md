@@ -6,16 +6,16 @@ A flutter app that tracks jobs and calculate the net time and revenue.
 - Authentication: Firebase Authentication
 - Backend: Firebase Firestore
 - State management: 
-   * Bloc Design Pattern (not Bloc packages) (Streams and StreamBuilder - RxDart)
-   * Provider Package with ValeNotifier and ChangeNotifier
+   - Bloc Design Pattern (not Bloc packages) (Streams and StreamBuilder - RxDart)
+   - Provider Package with ValeNotifier and ChangeNotifier
 - Packages:
-   * firebase_core
-   * firebase_auth
-   * cloud_firestore
-   * google_sign_in
-   * rxdart
-   * provider
-   * intl
+   - firebase_core
+   - firebase_auth
+   - cloud_firestore
+   - google_sign_in
+   - rxdart
+   - provider
+   - intl
  
 
 ## Notes
@@ -43,7 +43,7 @@ A flutter app that tracks jobs and calculate the net time and revenue.
       
 <table>
   <tr>
-    <td>empty Job Entries</td>
+    <td>Empty Job Entries</td>
      <td>Create / Edit Entry</td>
      <td>Job Entries</td>
   </tr>
