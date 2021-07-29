@@ -13,27 +13,6 @@ import 'package:job_tracker_flutter/services/database.dart';
 import 'package:provider/provider.dart';
 
 class JobsPage extends StatelessWidget {
-  Future<void> _signOut(context) async {
-    final auth = Provider.of<AuthBase>(context, listen: false);
-    try {
-      await auth.signOut();
-    } catch (e, s) {
-      log(e.toString());
-      log(s.toString());
-    }
-  }
-
-  Future<void> _confirmSignOut(context) async {
-    final bool isConfirmed = await showAlertDialog(
-        context: context,
-        error: 'Are you sure that you want to sign out?',
-        title: 'Sign Out',
-        cancelActionText: 'Cancel');
-    if (isConfirmed) {
-      _signOut(context);
-    }
-  }
-
   Future<void> _delete(BuildContext context, Job job) async {
     final database = Provider.of<Database>(context, listen: false);
     try {
@@ -66,13 +45,10 @@ class JobsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Jobs'),
         actions: [
-          TextButton(
-            onPressed: () => _confirmSignOut(context),
-            child: Text(
-              'Sign Out',
-              style: TextStyle(color: Colors.white, fontSize: 18.0),
-            ),
-          )
+          IconButton(
+            onPressed: () => EditJobPage.show(context, database: database),
+            icon: Icon(Icons.add),
+          ),
         ],
       ),
       body: StreamBuilder<List<Job?>>(
@@ -97,10 +73,6 @@ class JobsPage extends StatelessWidget {
             ),
           );
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => EditJobPage.show(context, database: database),
-        child: Icon(Icons.add),
       ),
     );
   }

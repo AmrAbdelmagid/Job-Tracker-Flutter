@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:job_tracker_flutter/app/account/account_page.dart';
 import 'package:job_tracker_flutter/app/home/cupertino_home_scaffold.dart';
 import 'package:job_tracker_flutter/app/home/jobs_page.dart';
 import 'package:job_tracker_flutter/app/home/tab_item.dart';
@@ -18,7 +19,7 @@ class _HomePageState extends State<HomePage> {
     return {
       TabItem.jobs: (_) => JobsPage(),
       TabItem.entries: (_) => Container(),
-      TabItem.account: (_) => Container(color: Colors.amber),
+      TabItem.account: (_) => AccountPage(),
     };
   }
 
