@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:job_tracker_flutter/app/home/edit_job_page.dart';
@@ -6,9 +5,7 @@ import 'package:job_tracker_flutter/app/home/job_entries/job_entries_page.dart';
 import 'package:job_tracker_flutter/app/home/job_tile.dart';
 import 'package:job_tracker_flutter/app/home/list_items_builder.dart';
 import 'package:job_tracker_flutter/app/models/job.dart';
-import 'package:job_tracker_flutter/common_widgets/show_alert_dialog.dart';
 import 'package:job_tracker_flutter/common_widgets/show_exception_alert_dialog.dart';
-import 'package:job_tracker_flutter/services/auth.dart';
 import 'package:job_tracker_flutter/services/database.dart';
 import 'package:provider/provider.dart';
 
