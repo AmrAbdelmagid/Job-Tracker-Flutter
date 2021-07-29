@@ -37,7 +37,7 @@ A flutter app that tracks jobs and calculate the net time and revenue.
   <tr>
     <td><img src="screenshots/1.png" width=270 height=480></td>
     <td><img src="screenshots/2.png" width=270 height=480></td>
-    <td><img src=screenshots/3.png" width=270 height=480></td>
+    <td><img src="screenshots/3.png" width=270 height=480></td>
   </tr>
  </table>
       
@@ -50,7 +50,7 @@ A flutter app that tracks jobs and calculate the net time and revenue.
   <tr>
     <td><img src="screenshots/4.png" width=270 height=480></td>
     <td><img src="screenshots/5.png" width=270 height=480></td>
-    <td><img src=screenshots/6.png" width=270 height=480></td>
+    <td><img src="screenshots/6.png" width=270 height=480></td>
   </tr>
  </table>
  
