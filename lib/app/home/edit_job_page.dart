@@ -99,6 +99,10 @@ class _EditJobPageState extends State<EditJobPage> {
         title: 'Operation Failed',
         exception: e,
       );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
