@@ -1,16 +1,30 @@
-# job_tracker_flutter
+# Job Tracker Flutter App
 
-A new Flutter project.
+A flutter app that tracks jobs and calculate the net time and revenue.
 
-## Getting Started
+## Tools
+- Authentication: Firebase Authentication
+- Backend: Firebase Firestore
+- State management: 
+   * Bloc Design Pattern (not Bloc packages) (Streams and StreamBuilder - RxDart)
+   * Provider Package with ValeNotifier and ChangeNotifier
+- Packages:
+   * firebase_core
+   * firebase_auth
+   * cloud_firestore
+   * google_sign_in
+   * rxdart
+   * provider
+   * intl
+ 
 
-This project is a starting point for a Flutter application.
+## Notes
+ - In this application the services layer, data layer and UI layer are separated.
+ - This application includes advanced streams operation with reactive programming (RxDart).
 
-A few resources to get you started if this is your first Flutter project:
+## Reference
+ - I have accomplished this application by following this course: https://courses.codewithandrea.com/p/flutter-firebase-time-tracker-app
+ 
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Screenshots
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
